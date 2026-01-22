@@ -1,0 +1,40 @@
+<header class="header">
+  <div class="container">
+    <div class="header__inner">
+      <a href="{{ routes.root_url }}" class="header__logo">
+        {%- if section.settings.logo != blank -%}
+          <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" loading="eager">
+        {%- else -%}
+          {{ shop.name }}
+        {%- endif -%}
+      </a>
+      <nav class="header__nav">
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}" class="header__nav-link{% if link.active %} active{% endif %}">{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+      <div class="header__actions">
+        <button class="btn--icon" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <a href="{{ routes.account_url }}" class="btn--icon" aria-label="Account">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <a href="{{ routes.cart_url }}" class="btn--icon" aria-label="Cart" style="position: relative;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+          {%- if cart.item_count > 0 -%}<span class="header__cart-count">{{ cart.item_count }}</span>{%- endif -%}
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "link_list", "id": "menu", "default": "main-menu", "label": "Menu" }
+  ]
+}
+{% endschema %}
