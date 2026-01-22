@@ -1,49 +1,238 @@
-<section class="hero">
-  <div class="container">
-    <div class="hero__inner">
-      <div class="hero__content">
-        {%- if section.settings.title != blank -%}
-          <h1 class="hero__title">{{ section.settings.title }}</h1>
-        {%- endif -%}
-        {%- if section.settings.description != blank -%}
-          <p class="hero__description">{{ section.settings.description }}</p>
-        {%- endif -%}
-        <div class="hero__buttons">
-          {%- if section.settings.button_label != blank -%}
-            <a href="{{ section.settings.button_link }}" class="btn btn--primary">{{ section.settings.button_label }}</a>
-          {%- endif -%}
-          {%- if section.settings.button_label_2 != blank -%}
-            <a href="{{ section.settings.button_link_2 }}" class="btn btn--secondary">{{ section.settings.button_label_2 }}</a>
-          {%- endif -%}
+<section class="dual-slideshow">
+  <div class="dual-slideshow__container">
+    <div class="dual-slideshow__left">
+      {% if section.settings.left_image != blank %}
+        <img src="{{ section.settings.left_image | image_url: width: 1200 }}" alt="{{ section.settings.left_title }}" class="dual-slideshow__bg-image">
+      {% endif %}
+      <div class="dual-slideshow__content">
+        <h1 class="dual-slideshow__title">
+          {{ section.settings.left_title_before }} 
+          <span class="gradient-text">{{ section.settings.left_title_highlight }}</span>
+          {{ section.settings.left_title_after }}
+        </h1>
+        <p class="dual-slideshow__subtitle">{{ section.settings.left_subtitle }}</p>
+      </div>
+      <div class="dual-slideshow__nav">
+        <button class="dual-slideshow__arrow dual-slideshow__arrow--prev" aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="dual-slideshow__dots">
+          <span class="dual-slideshow__dot active"></span>
+          <span class="dual-slideshow__dot"></span>
+          <span class="dual-slideshow__dot"></span>
+          <span class="dual-slideshow__dot"></span>
+          <span class="dual-slideshow__dot"></span>
+          <span class="dual-slideshow__dot"></span>
         </div>
       </div>
-      <div class="hero__media">
-        {%- if section.settings.backdrop_text != blank -%}
-          <span class="hero__backdrop">{{ section.settings.backdrop_text }}</span>
-        {%- endif -%}
-        {%- if section.settings.image != blank -%}
-          <img class="hero__image" src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.title }}" loading="eager">
-        {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'hero__image' }}
-        {%- endif -%}
+    </div>
+    
+    <div class="dual-slideshow__right">
+      <div class="dual-slideshow__card">
+        <h2 class="dual-slideshow__card-title">{{ section.settings.right_title }}</h2>
+        <p class="dual-slideshow__card-subtitle">{{ section.settings.right_subtitle }}</p>
+        {% if section.settings.right_image != blank %}
+          <img src="{{ section.settings.right_image | image_url: width: 800 }}" alt="{{ section.settings.right_title }}" class="dual-slideshow__card-image">
+        {% endif %}
+        <span class="dual-slideshow__watermark">{{ section.settings.watermark_text }}</span>
+        <div class="dual-slideshow__card-buttons">
+          <a href="{{ section.settings.explore_link }}" class="btn btn--outline">Explore</a>
+          <a href="{{ section.settings.shop_link }}" class="btn btn--dark">Shop Now</a>
+        </div>
       </div>
+      <button class="dual-slideshow__arrow dual-slideshow__arrow--next" aria-label="Next">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
     </div>
   </div>
 </section>
 
+<style>
+.dual-slideshow { padding: 20px 16px 0; }
+.dual-slideshow__container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 14px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 700px;
+}
+.dual-slideshow__left {
+  position: relative;
+  background: #1a1a1a;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+}
+.dual-slideshow__bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dual-slideshow__content {
+  position: relative;
+  z-index: 2;
+}
+.dual-slideshow__title {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.gradient-text {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7C94B 50%, #FF6B35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+}
+.dual-slideshow__subtitle {
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  max-width: 300px;
+}
+.dual-slideshow__nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+.dual-slideshow__arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dual-slideshow__arrow:hover { background: rgba(255,255,255,0.2); }
+.dual-slideshow__dots {
+  display: flex;
+  gap: 8px;
+}
+.dual-slideshow__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+}
+.dual-slideshow__dot.active { background: #fff; }
+.dual-slideshow__right {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.dual-slideshow__card {
+  background: linear-gradient(180deg, #19E8FC 0%, #0066FF 100%);
+  border-radius: 24px;
+  padding: 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.dual-slideshow__card-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  background: linear-gradient(135deg, #FF00FF 0%, #00FFFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.dual-slideshow__card-subtitle {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+}
+.dual-slideshow__card-image {
+  max-width: 100%;
+  height: auto;
+  margin: auto 0;
+  position: relative;
+  z-index: 2;
+}
+.dual-slideshow__watermark {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(60px, 10vw, 120px);
+  font-weight: 900;
+  color: rgba(0,0,0,0.1);
+  white-space: nowrap;
+  text-transform: uppercase;
+  z-index: 1;
+}
+.dual-slideshow__card-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+.btn--outline {
+  padding: 12px 24px;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  color: #fff;
+  background: transparent;
+  font-weight: 600;
+  font-size: 14px;
+}
+.btn--dark {
+  padding: 12px 24px;
+  background: #000;
+  border-radius: 50px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}
+.dual-slideshow__right .dual-slideshow__arrow--next {
+  position: absolute;
+  right: -20px;
+  background: #fff;
+  color: #000;
+  border: none;
+}
+@media (max-width: 768px) {
+  .dual-slideshow__container {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .dual-slideshow__left,
+  .dual-slideshow__card { min-height: 400px; }
+}
+</style>
+
 {% schema %}
 {
-  "name": "Hero Banner",
+  "name": "Dual Media Slideshow",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "Where <strong>Excellence</strong> Meets Deep Resonance" },
-    { "type": "textarea", "id": "description", "label": "Description", "default": "Crafted for audiophiles, experience sublime clarity and power." },
-    { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "text", "id": "backdrop_text", "label": "Backdrop Text", "default": "HEADPHONES" },
-    { "type": "text", "id": "button_label", "label": "Button 1 Label", "default": "Shop Now" },
-    { "type": "url", "id": "button_link", "label": "Button 1 Link" },
-    { "type": "text", "id": "button_label_2", "label": "Button 2 Label", "default": "Explore" },
-    { "type": "url", "id": "button_link_2", "label": "Button 2 Link" }
+    { "type": "header", "content": "Left Panel" },
+    { "type": "image_picker", "id": "left_image", "label": "Background Image" },
+    { "type": "text", "id": "left_title_before", "label": "Title (before highlight)", "default": "Where" },
+    { "type": "text", "id": "left_title_highlight", "label": "Title (highlight)", "default": "Excellence" },
+    { "type": "text", "id": "left_title_after", "label": "Title (after highlight)", "default": "Meets Deep Resonance" },
+    { "type": "textarea", "id": "left_subtitle", "label": "Subtitle", "default": "Crafted for audiophiles, experience sublime clarity, warmth, and power daily." },
+    { "type": "header", "content": "Right Panel" },
+    { "type": "image_picker", "id": "right_image", "label": "Product Image" },
+    { "type": "text", "id": "right_title", "label": "Title", "default": "Pure Sound Elite" },
+    { "type": "text", "id": "right_subtitle", "label": "Subtitle", "default": "Redefining modern tech: Starts at $132.99" },
+    { "type": "text", "id": "watermark_text", "label": "Watermark Text", "default": "OVER BEAT" },
+    { "type": "url", "id": "explore_link", "label": "Explore Link" },
+    { "type": "url", "id": "shop_link", "label": "Shop Now Link" }
   ],
-  "presets": [{ "name": "Hero Banner" }]
+  "presets": [{ "name": "Dual Media Slideshow" }]
 }
 {% endschema %}
