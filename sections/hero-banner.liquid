@@ -1,0 +1,49 @@
+<section class="hero">
+  <div class="container">
+    <div class="hero__inner">
+      <div class="hero__content">
+        {%- if section.settings.title != blank -%}
+          <h1 class="hero__title">{{ section.settings.title }}</h1>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="hero__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+        <div class="hero__buttons">
+          {%- if section.settings.button_label != blank -%}
+            <a href="{{ section.settings.button_link }}" class="btn btn--primary">{{ section.settings.button_label }}</a>
+          {%- endif -%}
+          {%- if section.settings.button_label_2 != blank -%}
+            <a href="{{ section.settings.button_link_2 }}" class="btn btn--secondary">{{ section.settings.button_label_2 }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="hero__media">
+        {%- if section.settings.backdrop_text != blank -%}
+          <span class="hero__backdrop">{{ section.settings.backdrop_text }}</span>
+        {%- endif -%}
+        {%- if section.settings.image != blank -%}
+          <img class="hero__image" src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.title }}" loading="eager">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'hero__image' }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Where <strong>Excellence</strong> Meets Deep Resonance" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Crafted for audiophiles, experience sublime clarity and power." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "backdrop_text", "label": "Backdrop Text", "default": "HEADPHONES" },
+    { "type": "text", "id": "button_label", "label": "Button 1 Label", "default": "Shop Now" },
+    { "type": "url", "id": "button_link", "label": "Button 1 Link" },
+    { "type": "text", "id": "button_label_2", "label": "Button 2 Label", "default": "Explore" },
+    { "type": "url", "id": "button_link_2", "label": "Button 2 Link" }
+  ],
+  "presets": [{ "name": "Hero Banner" }]
+}
+{% endschema %}
