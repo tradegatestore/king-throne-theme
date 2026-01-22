@@ -1,0 +1,42 @@
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <h2 class="section__title">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="section__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+    <div class="products-grid">
+      {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+        <article class="product-card">
+          <div class="product-card__media">
+            {%- if product.featured_image != blank -%}
+              <a href="{{ product.url }}">
+                <img class="product-card__image" src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}" loading="lazy">
+              </a>
+            {%- endif -%}
+            <button class="product-card__quick-add">Quick View</button>
+          </div>
+          <div class="product-card__info">
+            <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+            <p class="product-card__price">{{ product.price | money }}</p>
+            <button class="product-card__add-to-cart" data-variant-id="{{ product.selected_or_first_available_variant.id }}">Add to Cart</button>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Tech You'll Truly Love" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "min": 2, "max": 12, "step": 1, "default": 4, "label": "Products" }
+  ],
+  "presets": [{ "name": "Featured Products" }]
+}
+{% endschema %}
