@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "title": "Where <strong>Excellence</strong> Meets Deep Resonance",
+        "description": "Crafted for audiophiles, experience sublime clarity, warmth, and power daily.",
+        "backdrop_text": "HEADPHONES",
+        "button_label": "Shop Now",
+        "button_label_2": "Explore"
+      }
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Tech You'll Truly Love",
+        "subtitle": "Upgrade every day with connected devices delivering effortless performance.",
+        "products_to_show": 4
+      }
+    }
+  },
+  "order": ["hero", "featured-products"]
+}
