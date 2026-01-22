@@ -1,0 +1,63 @@
+{% comment %}
+  Product Card Snippet
+  Displays individual product cards with hover effects
+{% endcomment %}
+
+<article class="product-card" data-product-id="{{ product.id }}">
+  <a href="{{ product.url }}" class="product-card__link">
+    <div class="product-card__image-wrapper">
+      {% if product.featured_image %}
+        <img
+          src="{{ product.featured_image | image_url: width: 600 }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          class="product-card__image"
+          loading="lazy"
+          width="600"
+          height="600"
+        >
+        {% if product.images[1] %}
+          <img
+            src="{{ product.images[1] | image_url: width: 600 }}"
+            alt="{{ product.title | escape }}"
+            class="product-card__image product-card__image--hover"
+            loading="lazy"
+            width="600"
+            height="600"
+          >
+        {% endif %}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+      {% endif %}
+      
+      {% if product.available == false %}
+        <span class="product-card__badge product-card__badge--sold-out">Sold Out</span>
+      {% elsif product.compare_at_price > product.price %}
+        {% assign savings = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
+        <span class="product-card__badge product-card__badge--sale">-{{ savings }}%</span>
+      {% endif %}
+    </div>
+    
+    <div class="product-card__info">
+      <h3 class="product-card__title">{{ product.title }}</h3>
+      <div class="product-card__price">
+        {% if product.compare_at_price > product.price %}
+          <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+        {% endif %}
+        <span class="product-card__price--regular">{{ product.price | money }}</span>
+      </div>
+    </div>
+  </a>
+  
+  <button
+    type="button"
+    class="product-card__add-to-cart btn btn--primary"
+    data-product-id="{{ product.variants.first.id }}"
+    {% unless product.available %}disabled{% endunless %}
+  >
+    {% if product.available %}
+      Add to Cart
+    {% else %}
+      Sold Out
+    {% endif %}
+  </button>
+</article>
