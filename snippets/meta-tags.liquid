@@ -1,0 +1,39 @@
+{% comment %}
+  Meta tags snippet for SEO and social sharing
+{% endcomment %}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% if page_title contains shop.name %}
+  <title>{{ page_title }}</title>
+{% else %}
+  <title>{{ page_title }} - {{ shop.name }}</title>
+{% endif %}
+
+{% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+{% endif %}
+
+<link rel="canonical" href="{{ canonical_url }}">
+
+{% if settings.favicon %}
+  <link rel="shortcut icon" href="{{ settings.favicon | image_url: width: 32 }}" type="image/png">
+{% endif %}
+
+{% comment %} Open Graph Tags {% endcomment %}
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title | escape }}">
+<meta property="og:type" content="website">
+{% if page_description %}
+  <meta property="og:description" content="{{ page_description | escape }}">
+{% endif %}
+
+{% comment %} Twitter Card Tags {% endcomment %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page_title | escape }}">
+{% if page_description %}
+  <meta name="twitter:description" content="{{ page_description | escape }}">
+{% endif %}
